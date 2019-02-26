@@ -1,3 +1,5 @@
+@import "../../common/Colors.css";
+
 :global {
   html {
     height: 100%;
@@ -6,7 +8,7 @@
   body {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    background: #fafafa;
+    background: $grey05;
     height: 100%;
     margin: 0;
 
@@ -29,12 +31,12 @@
     }
 
     .left {
-      background: #fafafa;
+      background: $grey05;
     }
 
     .right {
-      background: #ffffff;
-      box-shadow: 2px 0px 10px 0px #cacbcc;
+      background: $tertiary;
+      box-shadow: 2px 0px 10px 0px $grey3;
     }
   }
 }

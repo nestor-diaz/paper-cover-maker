@@ -29,6 +29,7 @@ const Author = SortableElement(({
 
 const AuthorSortableList = SortableContainer(({ authors, authorSelected, onItemClick }) => (
   <div className={styles.authorList}>
+    {authors.length === 0 && <div className={styles.emptyText}>No authors has been added</div>}
     {authors.map((author, index) => (
       <Author
         id={author.id}
@@ -98,7 +99,7 @@ class AuthorList extends PureComponent {
 }
 
 AuthorList.propTypes = {
-  authorSelected: PropTypes.number,
+  authorSelected: PropTypes.string,
   authors: PropTypes.array,
   onAuthorAdd: PropTypes.func,
   onAuthorClick: PropTypes.func,
@@ -107,7 +108,7 @@ AuthorList.propTypes = {
 };
 
 AuthorList.defaultProps = {
-  authorSelected: -1,
+  authorSelected: '',
   authors: [],
   onAuthorAdd: () => {},
   onAuthorClick: () => {},

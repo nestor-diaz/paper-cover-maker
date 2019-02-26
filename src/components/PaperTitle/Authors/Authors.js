@@ -5,7 +5,7 @@ import styles from './Authors.css';
 
 const Authors = ({ authors }) => (
   <div className={styles.authors}>
-    {authors.map((name, index) => <Author key={`author-${index}`} name={name} />)}
+    {authors.map((author, index) => <Author key={`author-${index}`} name={author.name} />)}
   </div>
 );
 

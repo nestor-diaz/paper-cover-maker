@@ -18,6 +18,12 @@
     max-height: 600px;
     overflow: auto;
 
+    .empty-text {
+      color: $grey5;
+      text-align: center;
+      padding: 20px;
+    }
+
     .item {
       align-items: center;
       background: $tertiary;

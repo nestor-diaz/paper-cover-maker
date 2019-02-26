@@ -5,13 +5,6 @@ import Authors from './Authors';
 import styles from './PaperTitle.css';
 import Affiliations from './Affiliations/Affiliations';
 
-const authors = [
-  'Alice Abaraham',
-  'Christie Chang',
-  'Bill Byron',
-  'David Doel'
-];
-
 const affiliations = [
   'University of Utopia',
   'Neverland Institute of Technology',
@@ -21,6 +14,7 @@ const affiliations = [
 const PaperTitle = () => (
   <AppContext.Consumer>
     {({
+      authors,
       title
     }) => (
       <div className={styles.paperTitle}>

@@ -1,8 +1,11 @@
+@import "../../common/Colors.css";
+
 :local {
   .paper-title {
-    background: #ffffff;
-    box-shadow: 0px 1px 5px 0px #cacbcc;
+    background: $tertiary;
+    box-shadow: 0px 1px 5px 0px $grey3;
     margin: 0 auto;
+    min-width: 700px;
     padding: 60px 40px;
 
     .title {

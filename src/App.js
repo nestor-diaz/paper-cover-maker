@@ -12,20 +12,8 @@ import 'react-tippy/dist/tippy.css';
 class App extends Component {
   state = {
     title: '',
-    authors: [{
-      id: 0,
-      name: 'Alice Abaraham'
-    }, {
-      id: 1,
-      name: 'Christie Chang'
-    }, {
-      id: 2,
-      name: 'Bill Byron'
-    }, {
-      id: 3,
-      name: 'David Doel'
-    }],
-    authorSelected: -1,
+    authors: [],
+    authorSelected: '',
     institutions: [],
     isAddingAuthor: false,
     isAddingInstitution: false
@@ -61,7 +49,15 @@ class App extends Component {
 
   handleInstitutionStartAdding = () => this.setState({ isAddingInstitution: true });
 
-  handleInstitutionAdd = () => {};
+  handleInstitutionAdd = ({ name }) => {
+    const newInstitution = { name, id: randomKey.generate() };
+    const { institutions } = this.state;
+
+    this.setState({
+      institutions: [newInstitution, ...institutions],
+      isAddingInstitution: false
+    });
+  };
 
   render() {
     const {
@@ -80,7 +76,7 @@ class App extends Component {
         onAuthorStartAdding: this.handleAuthorStartAdding,
         onAuthorAdd: this.handleAuthorAdd,
         onAuthorClick: this.handleAuthorClick,
-        onInstitutionAddStartAdding: this.handleInstitutionStartAdding,
+        onInstitutionStartAdding: this.handleInstitutionStartAdding,
         onInstitutionAdd: this.handleInstitutionAdd,
         onAuthorMove: this.handleAuthorMove
       }}

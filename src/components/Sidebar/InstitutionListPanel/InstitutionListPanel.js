@@ -1,19 +1,33 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import AppContext from '~/AppContext';
 import Panel from '~/components/Common/Panel';
 import InstitutionList from './InstitutionList';
 
 const InstitutionListPanel = () => (
-  <Panel
-    title="Institutions" actionsRenderer={() => (
-      <Button size="small" onClick={() => {}}>
-        <AddIcon />
-      </Button>
+  <AppContext.Consumer>
+    {({
+      institutions,
+      isAddingInstitution,
+      onInstitutionStartAdding,
+      onInstitutionAdd
+    }) => (
+      <Panel
+        title="Institutions" actionsRenderer={() => (
+          <Button size="small" onClick={onInstitutionStartAdding}>
+            <AddIcon />
+          </Button>
+        )}
+      >
+        <InstitutionList
+          institutions={institutions}
+          onInstitutionAdd={onInstitutionAdd}
+          showNewInstitutionInput={isAddingInstitution}
+        />
+      </Panel>
     )}
-  >
-    <InstitutionList />
-  </Panel>
+  </AppContext.Consumer>
 );
 
 export default InstitutionListPanel;
