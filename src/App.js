@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import { arrayMove } from 'react-sortable-hoc';
+import randomKey from 'random-key';
 import PaperTitle from '~/components/PaperTitle';
 import Sidebar from '~/components/Sidebar';
 import AppContext from './AppContext';
@@ -24,6 +25,7 @@ class App extends Component {
       id: 3,
       name: 'David Doel'
     }],
+    authorSelected: -1,
     institutions: [],
     isAddingAuthor: false,
     isAddingInstitution: false
@@ -37,8 +39,8 @@ class App extends Component {
 
   handleAuthorStartAdding = () => this.setState({ isAddingAuthor: true });
 
-  handleAuthorAdd = (name) => {
-    const newAuthor = { name, id: 10 };
+  handleAuthorAdd = ({ name }) => {
+    const newAuthor = { name, id: randomKey.generate() };
     const { authors } = this.state;
 
     this.setState({
@@ -46,6 +48,8 @@ class App extends Component {
       isAddingAuthor: false
     });
   };
+
+  handleAuthorClick = ({ id }) => this.setState({ authorSelected: id });
 
   handleAuthorMove = ({ oldIndex, newIndex }) => {
     this.setState(({ authors }) => ({
@@ -61,19 +65,21 @@ class App extends Component {
 
   render() {
     const {
-      title, authors, institutions, isAddingAuthor, isAddingInstitution
+      title, authors, authorSelected, institutions, isAddingAuthor, isAddingInstitution
     } = this.state;
 
     return (
       <AppContext.Provider value={{
         title,
         authors,
+        authorSelected,
         institutions,
         isAddingAuthor,
         isAddingInstitution,
         onTitleChange: this.handleTitleChange,
         onAuthorStartAdding: this.handleAuthorStartAdding,
         onAuthorAdd: this.handleAuthorAdd,
+        onAuthorClick: this.handleAuthorClick,
         onInstitutionAddStartAdding: this.handleInstitutionStartAdding,
         onInstitutionAdd: this.handleInstitutionAdd,
         onAuthorMove: this.handleAuthorMove

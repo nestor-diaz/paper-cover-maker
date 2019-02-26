@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import {
-  SortableContainer, SortableElement, SortableHandle
-} from 'react-sortable-hoc';
+import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 import className from 'classnames';
 import Input from '@material-ui/core/Input';
 import DndIcon from './icons/DndIcon';
@@ -46,7 +44,6 @@ const AuthorSortableList = SortableContainer(({ authors, authorSelected, onItemC
 
 class AuthorList extends PureComponent {
   state = {
-    authorSelected: -1,
     newAuthorName: ''
   };
 
@@ -55,7 +52,7 @@ class AuthorList extends PureComponent {
     const { newAuthorName } = this.state;
 
     if (event.key === 'Enter') {
-      onAuthorAdd(newAuthorName);
+      onAuthorAdd({ name: newAuthorName });
 
       this.setState({ newAuthorName: '' });
     }
@@ -66,9 +63,13 @@ class AuthorList extends PureComponent {
   }
 
   render() {
-    const { authorSelected, newAuthorName } = this.state;
+    const { newAuthorName } = this.state;
     const {
-      authors, showNewAuthorInput, onAuthorClick, onAuthorMove
+      authorSelected,
+      authors,
+      onAuthorClick,
+      onAuthorMove,
+      showNewAuthorInput
     } = this.props;
 
     return (
@@ -85,10 +86,10 @@ class AuthorList extends PureComponent {
           />
           ) }
         <AuthorSortableList
+          authorSelected={authorSelected}
           authors={authors}
           onItemClick={onAuthorClick}
           onSortEnd={onAuthorMove}
-          authorSelected={authorSelected}
           useDragHandle
         />
       </div>
@@ -97,19 +98,21 @@ class AuthorList extends PureComponent {
 }
 
 AuthorList.propTypes = {
+  authorSelected: PropTypes.number,
   authors: PropTypes.array,
-  showNewAuthorInput: PropTypes.bool,
+  onAuthorAdd: PropTypes.func,
   onAuthorClick: PropTypes.func,
   onAuthorMove: PropTypes.func,
-  onAuthorAdd: PropTypes.func
+  showNewAuthorInput: PropTypes.bool
 };
 
 AuthorList.defaultProps = {
+  authorSelected: -1,
   authors: [],
-  showNewAuthorInput: false,
+  onAuthorAdd: () => {},
   onAuthorClick: () => {},
   onAuthorMove: () => {},
-  onAuthorAdd: () => {}
+  showNewAuthorInput: false
 };
 
 export default AuthorList;
