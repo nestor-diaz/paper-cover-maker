@@ -1,0 +1,26 @@
+@import "../../../common/Colors.css";
+
+:local {
+  .panel {
+    border-radius: 3px;
+    border: 1px solid $grey2;
+
+    .header {
+      align-items: center;
+      background: $grey1;
+      display: flex;
+      padding: 10px;
+
+      .title {
+        color: $grey6;
+        flex: 1;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 18px;
+      }
+
+      .actions {}
+    }
+
+    .content {}
+  }
+}

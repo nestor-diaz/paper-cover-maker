@@ -1,0 +1,8 @@
+:local {
+  .affiliations {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    text-align: center;
+  }
+}

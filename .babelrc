@@ -1,0 +1,19 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env", {
+        "targets": {
+          "browsers": ["last 2 versions"],
+          "node": "8"
+        }
+      }
+    ],
+    "@babel/react"
+  ],
+  "plugins": [
+    "transform-class-properties",
+    ["babel-plugin-root-import", {
+      "rootPathSuffix": "src"
+    }]
+  ]
+}

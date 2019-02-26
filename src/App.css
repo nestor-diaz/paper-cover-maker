@@ -1,0 +1,40 @@
+:global {
+  html {
+    height: 100%;
+  }
+
+  body {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    background: #fafafa;
+    height: 100%;
+    margin: 0;
+
+    & > #root {
+      display: flex;
+      height: 100%;
+    }
+  }
+}
+
+:local {
+  .layout {
+    display: flex;
+    flex: 1;
+
+    .column {
+      display: flex;
+      flex: 1 1 50%;
+      padding: 20px;
+    }
+
+    .left {
+      background: #fafafa;
+    }
+
+    .right {
+      background: #ffffff;
+      box-shadow: 2px 0px 10px 0px #cacbcc;
+    }
+  }
+}

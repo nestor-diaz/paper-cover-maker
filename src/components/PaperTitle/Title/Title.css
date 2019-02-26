@@ -1,0 +1,12 @@
+@import "../../../common/Colors.css";
+
+:local {
+  .title {
+    font-family: 'Lusitana', serif;
+    font-size: 26px;
+
+    .temp-text {
+      color: $grey3;
+    }
+  }
+}

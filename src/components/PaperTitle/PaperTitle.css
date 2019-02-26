@@ -1,0 +1,12 @@
+:local {
+  .paper-title {
+    background: #ffffff;
+    box-shadow: 0px 1px 5px 0px #cacbcc;
+    margin: 0 auto;
+    padding: 60px 40px;
+
+    .title {
+      text-align: center;
+    }
+  }
+}
