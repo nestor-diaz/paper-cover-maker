@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 import className from 'classnames';
 import Input from '@material-ui/core/Input';
-import DndIcon from './icons/DndIcon';
+import DndIcon from '@material-ui/icons/DragIndicator';
+import DeleteIcon from '@material-ui/icons/Delete';
 import styles from './AuthorList.css';
 
 const DragHandle = SortableHandle(() => (
@@ -12,20 +13,35 @@ const DragHandle = SortableHandle(() => (
   </span>
 ));
 
-const Author = SortableElement(({ author, isSelected, onClick }) => {
+const Author = SortableElement(({
+  author, isSelected, isHovered, onClick, onDelete, onItemMouseEnter, onItemMouseLeave
+}) => {
   const authorClassnames = className(styles.item, {
     [styles.selected]: isSelected
   });
 
   return (
-    <div className={authorClassnames} onClick={() => onClick({ author })}>
+    <div
+      className={authorClassnames}
+      onMouseEnter={() => onItemMouseEnter({ author })}
+      onMouseLeave={() => onItemMouseLeave({ author })}
+    >
       <DragHandle />
-      {author.name}
+      <div className={styles.authorName} onClick={() => onClick({ author })}>{author.name}</div>
+      {isHovered && <div className={styles.delete} onClick={() => onDelete({ author })}><DeleteIcon /></div>}
     </div>
   );
 });
 
-const AuthorSortableList = SortableContainer(({ authors, authorSelected, onItemClick }) => (
+const AuthorSortableList = SortableContainer(({
+  authors,
+  authorSelected,
+  authorHovered,
+  onItemClick,
+  onItemDelete,
+  onItemMouseEnter,
+  onItemMouseLeave
+}) => (
   <div className={styles.authorList}>
     {authors.length === 0 && <div className={styles.emptyText}>No authors has been added</div>}
     {authors.map((author, index) => (
@@ -34,7 +50,11 @@ const AuthorSortableList = SortableContainer(({ authors, authorSelected, onItemC
         index={index}
         key={`author-${index}`}
         onClick={onItemClick}
+        onDelete={onItemDelete}
+        onItemMouseEnter={onItemMouseEnter}
+        onItemMouseLeave={onItemMouseLeave}
         isSelected={author.id === authorSelected.id}
+        isHovered={author.id === authorHovered.id}
       />
     ))}
   </div>
@@ -42,6 +62,7 @@ const AuthorSortableList = SortableContainer(({ authors, authorSelected, onItemC
 
 class AuthorList extends PureComponent {
   state = {
+    authorHovered: {},
     newAuthorName: ''
   };
 
@@ -60,11 +81,20 @@ class AuthorList extends PureComponent {
     this.setState({ newAuthorName: event.target.value });
   }
 
+  handleItemMouseEnter = ({ author }) => {
+    this.setState({ authorHovered: author });
+  }
+
+  handleItemMouseLeave = () => {
+    this.setState({ authorHovered: {} });
+  }
+
   render() {
-    const { newAuthorName } = this.state;
+    const { authorHovered, newAuthorName } = this.state;
     const {
       authorSelected,
       authors,
+      onAuthorDelete,
       onAuthorClick,
       onAuthorMove,
       showNewAuthorInput
@@ -86,7 +116,11 @@ class AuthorList extends PureComponent {
         <AuthorSortableList
           authorSelected={authorSelected}
           authors={authors}
+          authorHovered={authorHovered}
           onItemClick={onAuthorClick}
+          onItemDelete={onAuthorDelete}
+          onItemMouseEnter={this.handleItemMouseEnter}
+          onItemMouseLeave={this.handleItemMouseLeave}
           onSortEnd={onAuthorMove}
           useDragHandle
         />
@@ -99,6 +133,7 @@ AuthorList.propTypes = {
   authorSelected: PropTypes.object,
   authors: PropTypes.array,
   onAuthorAdd: PropTypes.func,
+  onAuthorDelete: PropTypes.func,
   onAuthorClick: PropTypes.func,
   onAuthorMove: PropTypes.func,
   showNewAuthorInput: PropTypes.bool
@@ -108,6 +143,7 @@ AuthorList.defaultProps = {
   authorSelected: {},
   authors: [],
   onAuthorAdd: () => {},
+  onAuthorDelete: () => {},
   onAuthorClick: () => {},
   onAuthorMove: () => {},
   showNewAuthorInput: false

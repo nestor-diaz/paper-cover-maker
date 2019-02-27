@@ -1,4 +1,4 @@
-export function calculateAffiliatinIndexes({ authors, affiliations }) {
+export function calculateAffiliationIndexes({ authors, affiliations }) {
   const institutionsIndexes = [];
   const authorsIndexes = [];
 

@@ -36,6 +36,16 @@
       height: 60px;
       padding: 0 10px;
 
+      &.selected {
+        background: $indigo1;
+
+        .dnd-icon {
+          svg {
+            fill: $grey4;
+          }
+        }
+      }
+
       .dnd-icon {
         margin-right: 10px;
         cursor: row-resize;
@@ -45,12 +55,14 @@
         }
       }
 
-      &.selected {
-        background: $teal1;
+      .author-name {
+        flex: 1;
+      }
 
-        .dnd-icon {
+      .delete {
+        &:hover {
           svg {
-            fill: $grey4;
+            fill: red;
           }
         }
       }

@@ -12,6 +12,7 @@ const InstitutionListPanel = () => (
       isAddingInstitution,
       onInstitutionStartAdding,
       onInstitutionAdd,
+      onInstitutionDelete,
       onInstitutionClick
     }) => (
       <Panel
@@ -24,6 +25,7 @@ const InstitutionListPanel = () => (
         <InstitutionList
           institutions={institutions}
           onInstitutionAdd={onInstitutionAdd}
+          onInstitutionDelete={onInstitutionDelete}
           onInstitutionClick={onInstitutionClick}
           showNewInstitutionInput={isAddingInstitution}
         />

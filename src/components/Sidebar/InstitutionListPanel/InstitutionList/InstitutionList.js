@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Input from '@material-ui/core/Input';
+import DeleteIcon from '@material-ui/icons/Delete';
 import styles from './InstitutionList.css';
 
 class InstitutionList extends PureComponent {
   state = {
+    institutionHovered: {},
     newInstitutionName: ''
   };
 
@@ -23,21 +25,41 @@ class InstitutionList extends PureComponent {
     this.setState({ newInstitutionName: event.target.value });
   }
 
+  handleItemMouseEnter = ({ institution }) => {
+    this.setState({ institutionHovered: institution });
+  }
+
+  handleItemMouseLeave = () => {
+    this.setState({ institutionHovered: {} });
+  }
+
+  renderListItem = ({ institution }) => {
+    const { onInstitutionClick, onInstitutionDelete } = this.props;
+    const { institutionHovered } = this.state;
+    const isHovered = institution.id === institutionHovered.id;
+
+    return (
+      <div
+        className={styles.item}
+        key={institution.id}
+        onMouseEnter={() => this.handleItemMouseEnter({ institution })}
+        onMouseLeave={() => this.handleItemMouseLeave({ institution })}
+      >
+        <div className={styles.institutionName} onClick={() => onInstitutionClick({ institution })}>
+          {institution.name}
+        </div>
+        {isHovered && <div className={styles.delete} onClick={() => onInstitutionDelete({ institution })}><DeleteIcon /></div>}
+      </div>
+    );
+  }
+
   renderList = () => {
-    const { institutions, onInstitutionClick } = this.props;
+    const { institutions } = this.props;
 
     return (
       <div className={styles.institutionList}>
         {institutions.length === 0 && <div className={styles.emptyText}>No institutions has been added</div>}
-        {institutions.map((institution, index) => (
-          <div
-            className={styles.item}
-            key={`institution-list-${index}`}
-            onClick={() => onInstitutionClick({ institution })}
-          >
-            {institution.name}
-          </div>
-        ))}
+        {institutions.map((institution) => this.renderListItem({ institution }))}
       </div>
     );
   };
@@ -68,6 +90,7 @@ class InstitutionList extends PureComponent {
 InstitutionList.propTypes = {
   institutions: PropTypes.array,
   onInstitutionAdd: PropTypes.func,
+  onInstitutionDelete: PropTypes.func,
   onInstitutionClick: PropTypes.func,
   showNewInstitutionInput: PropTypes.bool
 };
@@ -75,6 +98,7 @@ InstitutionList.propTypes = {
 InstitutionList.defaultProps = {
   institutions: [],
   onInstitutionAdd: () => {},
+  onInstitutionDelete: () => {},
   onInstitutionClick: () => {},
   showNewInstitutionInput: false
 };

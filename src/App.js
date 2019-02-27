@@ -4,7 +4,7 @@ import { arrayMove } from 'react-sortable-hoc';
 import randomKey from 'random-key';
 import PaperTitle from '~/components/PaperTitle';
 import Sidebar from '~/components/Sidebar';
-import { calculateAffiliatinIndexes } from '~/utils/affiliations';
+import { calculateAffiliationIndexes } from '~/utils/affiliations';
 import AppContext from './AppContext';
 import styles from './App.css';
 
@@ -39,8 +39,20 @@ class App extends Component {
 
     this.setState({
       authors: [newAuthor, ...authors],
-      affiliationsIndexes: calculateAffiliatinIndexes({ authors, affiliations }),
+      affiliationsIndexes: calculateAffiliationIndexes({ authors, affiliations }),
       isAddingAuthor: false
+    });
+  };
+
+  handleAuthorDelete = ({ author }) => {
+    const { authors, affiliations } = this.state;
+    const filteredAuthors = authors.filter((currentAuthor) => currentAuthor.id !== author.id);
+    const filteredAffiliations = affiliations.filter((affiliation) => affiliation.author.id !== author.id);
+
+    this.setState({
+      authors: filteredAuthors,
+      affiliations: filteredAffiliations,
+      affiliationsIndexes: calculateAffiliationIndexes({ authors: filteredAuthors, affiliations: filteredAffiliations })
     });
   };
 
@@ -52,7 +64,7 @@ class App extends Component {
 
     this.setState({
       authors: newAuthorsOrder,
-      affiliationsIndexes: calculateAffiliatinIndexes({ authors: newAuthorsOrder, affiliations })
+      affiliationsIndexes: calculateAffiliationIndexes({ authors: newAuthorsOrder, affiliations })
     });
   };
 
@@ -70,6 +82,18 @@ class App extends Component {
     });
   };
 
+  handleInstitutionDelete = ({ institution }) => {
+    const { authors, institutions, affiliations } = this.state;
+    const filteredInstitutions = institutions.filter((currentInstitution) => currentInstitution.id !== institution.id);
+    const filteredAffiliations = affiliations.filter((affiliation) => affiliation.institution.id !== institution.id);
+
+    this.setState({
+      institutions: filteredInstitutions,
+      affiliations: filteredAffiliations,
+      affiliationsIndexes: calculateAffiliationIndexes({ authors, affiliations: filteredAffiliations })
+    });
+  };
+
   handleInstitutionClick= ({ institution }) => {
     const { authors, affiliations, authorSelected } = this.state;
 
@@ -78,7 +102,7 @@ class App extends Component {
 
       this.setState({
         affiliations: updatedAffiliations,
-        affiliationsIndexes: calculateAffiliatinIndexes({ authors, affiliations: updatedAffiliations })
+        affiliationsIndexes: calculateAffiliationIndexes({ authors, affiliations: updatedAffiliations })
       });
     }
   };
@@ -101,9 +125,11 @@ class App extends Component {
         onTitleChange: this.handleTitleChange,
         onAuthorStartAdding: this.handleAuthorStartAdding,
         onAuthorAdd: this.handleAuthorAdd,
+        onAuthorDelete: this.handleAuthorDelete,
         onAuthorClick: this.handleAuthorClick,
         onInstitutionStartAdding: this.handleInstitutionStartAdding,
         onInstitutionAdd: this.handleInstitutionAdd,
+        onInstitutionDelete: this.handleInstitutionDelete,
         onInstitutionClick: this.handleInstitutionClick,
         onAuthorMove: this.handleAuthorMove
       }}

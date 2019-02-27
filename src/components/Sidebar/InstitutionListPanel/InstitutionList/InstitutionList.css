@@ -35,6 +35,18 @@
       font-family: 'Open Sans', sans-serif;
       height: 60px;
       padding: 0 10px;
+
+      .institution-name {
+        flex: 1;
+      }
+
+      .delete {
+        &:hover {
+          svg {
+            fill: red;
+          }
+        }
+      }
     }
   }
 }

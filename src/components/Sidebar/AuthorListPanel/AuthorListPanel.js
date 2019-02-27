@@ -13,6 +13,7 @@ const AuthorListPanel = () => (
       isAddingAuthor,
       onAuthorStartAdding,
       onAuthorAdd,
+      onAuthorDelete,
       onAuthorClick,
       onAuthorMove
     }) => (
@@ -28,6 +29,7 @@ const AuthorListPanel = () => (
           authorSelected={authorSelected}
           showNewAuthorInput={isAddingAuthor}
           onAuthorAdd={onAuthorAdd}
+          onAuthorDelete={onAuthorDelete}
           onAuthorClick={onAuthorClick}
           onAuthorMove={onAuthorMove}
         />

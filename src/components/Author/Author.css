@@ -1,6 +1,7 @@
 :local {
   .author {
-    padding: 5px 10px;
     font-family: 'Lusitana', serif;
+    font-size: 18px;
+    padding: 5px 10px;
   }
 }
