@@ -31,8 +31,8 @@ rules:
   react/jsx-filename-extension:
     - 0
   react/jsx-max-props-per-line:
-    - 2
-    - maximum: 2
+    - 3
+    - maximum: 3
   react/forbid-prop-types:
     - 0
   react/no-array-index-key:

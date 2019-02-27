@@ -24,12 +24,20 @@ class InstitutionList extends PureComponent {
   }
 
   renderList = () => {
-    const { institutions } = this.props;
+    const { institutions, onInstitutionClick } = this.props;
 
     return (
       <div className={styles.institutionList}>
         {institutions.length === 0 && <div className={styles.emptyText}>No institutions has been added</div>}
-        {institutions.map((institution, index) => <span key={`institution-list-${index}`}>{institution.name}</span>)}
+        {institutions.map((institution, index) => (
+          <div
+            className={styles.item}
+            key={`institution-list-${index}`}
+            onClick={() => onInstitutionClick({ institution })}
+          >
+            {institution.name}
+          </div>
+        ))}
       </div>
     );
   };
@@ -60,12 +68,14 @@ class InstitutionList extends PureComponent {
 InstitutionList.propTypes = {
   institutions: PropTypes.array,
   onInstitutionAdd: PropTypes.func,
+  onInstitutionClick: PropTypes.func,
   showNewInstitutionInput: PropTypes.bool
 };
 
 InstitutionList.defaultProps = {
   institutions: [],
   onInstitutionAdd: () => {},
+  onInstitutionClick: () => {},
   showNewInstitutionInput: false
 };
 

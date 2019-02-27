@@ -12,17 +12,15 @@ const DragHandle = SortableHandle(() => (
   </span>
 ));
 
-const Author = SortableElement(({
-  id, isSelected, name, onClick
-}) => {
+const Author = SortableElement(({ author, isSelected, onClick }) => {
   const authorClassnames = className(styles.item, {
     [styles.selected]: isSelected
   });
 
   return (
-    <div className={authorClassnames} onClick={() => onClick({ id, name })}>
+    <div className={authorClassnames} onClick={() => onClick({ author })}>
       <DragHandle />
-      {name}
+      {author.name}
     </div>
   );
 });
@@ -32,12 +30,11 @@ const AuthorSortableList = SortableContainer(({ authors, authorSelected, onItemC
     {authors.length === 0 && <div className={styles.emptyText}>No authors has been added</div>}
     {authors.map((author, index) => (
       <Author
-        id={author.id}
+        author={author}
         index={index}
         key={`author-${index}`}
-        name={author.name}
         onClick={onItemClick}
-        isSelected={author.id === authorSelected}
+        isSelected={author.id === authorSelected.id}
       />
     ))}
   </div>
@@ -99,7 +96,7 @@ class AuthorList extends PureComponent {
 }
 
 AuthorList.propTypes = {
-  authorSelected: PropTypes.string,
+  authorSelected: PropTypes.object,
   authors: PropTypes.array,
   onAuthorAdd: PropTypes.func,
   onAuthorClick: PropTypes.func,
@@ -108,7 +105,7 @@ AuthorList.propTypes = {
 };
 
 AuthorList.defaultProps = {
-  authorSelected: '',
+  authorSelected: {},
   authors: [],
   onAuthorAdd: () => {},
   onAuthorClick: () => {},

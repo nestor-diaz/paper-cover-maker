@@ -4,6 +4,7 @@ import { arrayMove } from 'react-sortable-hoc';
 import randomKey from 'random-key';
 import PaperTitle from '~/components/PaperTitle';
 import Sidebar from '~/components/Sidebar';
+import { calculateAffiliatinIndexes } from '~/utils/affiliations';
 import AppContext from './AppContext';
 import styles from './App.css';
 
@@ -13,7 +14,12 @@ class App extends Component {
   state = {
     title: '',
     authors: [],
-    authorSelected: '',
+    authorSelected: {},
+    affiliations: [],
+    affiliationsIndexes: {
+      institutionsIndexes: [],
+      authorsIndexes: []
+    },
     institutions: [],
     isAddingAuthor: false,
     isAddingInstitution: false
@@ -29,20 +35,25 @@ class App extends Component {
 
   handleAuthorAdd = ({ name }) => {
     const newAuthor = { name, id: randomKey.generate() };
-    const { authors } = this.state;
+    const { authors, affiliations } = this.state;
 
     this.setState({
       authors: [newAuthor, ...authors],
+      affiliationsIndexes: calculateAffiliatinIndexes({ authors, affiliations }),
       isAddingAuthor: false
     });
   };
 
-  handleAuthorClick = ({ id }) => this.setState({ authorSelected: id });
+  handleAuthorClick = ({ author }) => this.setState({ authorSelected: author });
 
   handleAuthorMove = ({ oldIndex, newIndex }) => {
-    this.setState(({ authors }) => ({
-      authors: arrayMove(authors, oldIndex, newIndex)
-    }));
+    const { authors, affiliations } = this.state;
+    const newAuthorsOrder = arrayMove(authors, oldIndex, newIndex);
+
+    this.setState({
+      authors: newAuthorsOrder,
+      affiliationsIndexes: calculateAffiliatinIndexes({ authors: newAuthorsOrder, affiliations })
+    });
   };
 
   // Institutions handlers.
@@ -59,17 +70,32 @@ class App extends Component {
     });
   };
 
+  handleInstitutionClick= ({ institution }) => {
+    const { authors, affiliations, authorSelected } = this.state;
+
+    if (Object.keys(authorSelected).length > 0) {
+      const updatedAffiliations = affiliations.concat({ author: authorSelected, institution });
+
+      this.setState({
+        affiliations: updatedAffiliations,
+        affiliationsIndexes: calculateAffiliatinIndexes({ authors, affiliations: updatedAffiliations })
+      });
+    }
+  };
+
   render() {
     const {
-      title, authors, authorSelected, institutions, isAddingAuthor, isAddingInstitution
+      title, authors, authorSelected, affiliationsIndexes, institutions, isAddingAuthor, isAddingInstitution
     } = this.state;
 
     return (
       <AppContext.Provider value={{
         title,
         authors,
+        authorsIndexes: affiliationsIndexes.authorsIndexes,
         authorSelected,
         institutions,
+        institutionsIndexes: affiliationsIndexes.institutionsIndexes,
         isAddingAuthor,
         isAddingInstitution,
         onTitleChange: this.handleTitleChange,
@@ -78,6 +104,7 @@ class App extends Component {
         onAuthorClick: this.handleAuthorClick,
         onInstitutionStartAdding: this.handleInstitutionStartAdding,
         onInstitutionAdd: this.handleInstitutionAdd,
+        onInstitutionClick: this.handleInstitutionClick,
         onAuthorMove: this.handleAuthorMove
       }}
       >

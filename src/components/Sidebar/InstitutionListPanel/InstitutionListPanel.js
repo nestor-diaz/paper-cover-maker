@@ -11,7 +11,8 @@ const InstitutionListPanel = () => (
       institutions,
       isAddingInstitution,
       onInstitutionStartAdding,
-      onInstitutionAdd
+      onInstitutionAdd,
+      onInstitutionClick
     }) => (
       <Panel
         title="Institutions" actionsRenderer={() => (
@@ -23,6 +24,7 @@ const InstitutionListPanel = () => (
         <InstitutionList
           institutions={institutions}
           onInstitutionAdd={onInstitutionAdd}
+          onInstitutionClick={onInstitutionClick}
           showNewInstitutionInput={isAddingInstitution}
         />
       </Panel>

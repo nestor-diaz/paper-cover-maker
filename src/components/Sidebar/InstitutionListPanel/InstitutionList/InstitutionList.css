@@ -23,5 +23,18 @@
       text-align: center;
       padding: 20px;
     }
+
+    .item {
+      align-items: center;
+      background: $tertiary;
+      border-bottom: 1px solid $grey1;
+      box-sizing: border-box;
+      color: $grey6;
+      cursor: pointer;
+      display: flex;
+      font-family: 'Open Sans', sans-serif;
+      height: 60px;
+      padding: 0 10px;
+    }
   }
 }

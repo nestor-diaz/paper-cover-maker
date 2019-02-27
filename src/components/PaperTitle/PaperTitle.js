@@ -3,30 +3,20 @@ import AppContext from '~/AppContext';
 import Title from './Title';
 import Authors from './Authors';
 import styles from './PaperTitle.css';
-import Affiliations from './Affiliations/Affiliations';
-
-const affiliations = [
-  'University of Utopia',
-  'Neverland Institute of Technology',
-  'University of Argleton'
-];
+import Institutions from './Institutions';
 
 const PaperTitle = () => (
   <AppContext.Consumer>
     {({
       authors,
+      authorsIndexes,
+      institutionsIndexes,
       title
     }) => (
       <div className={styles.paperTitle}>
-        <div className={styles.title}>
-          <Title title={title} />
-        </div>
-        <div className={styles.authors}>
-          <Authors authors={authors} />
-        </div>
-        <div className={styles.affiliations}>
-          <Affiliations affiliations={affiliations} />
-        </div>
+        <Title title={title} />
+        <Authors authors={authors} authorsIndexes={authorsIndexes} />
+        <Institutions institutionsIndexes={institutionsIndexes} />
       </div>
     )}
   </AppContext.Consumer>

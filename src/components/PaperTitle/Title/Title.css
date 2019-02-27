@@ -4,6 +4,7 @@
   .title {
     font-family: 'Lusitana', serif;
     font-size: 26px;
+    text-align: center;
 
     .temp-text {
       color: $grey3;
