@@ -2,7 +2,7 @@
 
 :local {
   .header {
-    border-bottom: 4px solid $teal1;
+    border-bottom: 4px solid $indigo1;
     color: $grey6;
     display: flex;
     font-family: 'Open Sans', sans-serif;

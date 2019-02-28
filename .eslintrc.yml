@@ -86,3 +86,4 @@ globals:
   window: true
   document: true
   isDev: true
+  localStorage: true

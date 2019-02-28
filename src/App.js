@@ -8,8 +8,6 @@ import { calculateAffiliationIndexes } from '~/utils/affiliations';
 import AppContext from './AppContext';
 import styles from './App.css';
 
-import 'react-tippy/dist/tippy.css';
-
 class App extends Component {
   state = {
     title: '',
@@ -107,9 +105,36 @@ class App extends Component {
     }
   };
 
+  // Save handlers
+
+  handleOnSave = () => {
+    const {
+      title,
+      authors,
+      institutions,
+      affiliations,
+      affiliationsIndexes
+    } = this.state;
+
+    localStorage.setItem('paper', JSON.stringify({
+      title,
+      authors,
+      institutions,
+      affiliations,
+      affiliationsIndexes
+    }));
+  };
+
   render() {
     const {
-      title, authors, authorSelected, affiliationsIndexes, institutions, isAddingAuthor, isAddingInstitution
+      title,
+      authors,
+      authorSelected,
+      affiliations,
+      affiliationsIndexes,
+      institutions,
+      isAddingAuthor,
+      isAddingInstitution
     } = this.state;
 
     return (
@@ -118,6 +143,7 @@ class App extends Component {
         authors,
         authorsIndexes: affiliationsIndexes.authorsIndexes,
         authorSelected,
+        affiliations,
         institutions,
         institutionsIndexes: affiliationsIndexes.institutionsIndexes,
         isAddingAuthor,
@@ -139,7 +165,7 @@ class App extends Component {
             <PaperTitle />
           </div>
           <div className={classNames(styles.column, styles.right)}>
-            <Sidebar />
+            <Sidebar onSave={this.handleOnSave} />
           </div>
         </div>
       </AppContext.Provider>

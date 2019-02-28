@@ -24,20 +24,18 @@
       padding: 20px;
     }
 
-    .item {
+    .item-wrapper {
       align-items: center;
       background: $tertiary;
       border-bottom: 1px solid $grey1;
       box-sizing: border-box;
-      color: $grey6;
       cursor: pointer;
       display: flex;
-      font-family: 'Open Sans', sans-serif;
       height: 60px;
       padding: 0 10px;
 
       &.selected {
-        background: $indigo1;
+        background: $indigo05;
 
         .dnd-icon {
           svg {
@@ -46,23 +44,39 @@
         }
       }
 
-      .dnd-icon {
-        margin-right: 10px;
-        cursor: row-resize;
+      .item-drag {
+        align-items: center;
+        display: flex;
 
-        svg {
-          fill: $grey3;
+        .dnd-icon {
+          margin-right: 10px;
+          cursor: row-resize;
+
+          svg {
+            fill: $grey3;
+          }
         }
       }
 
-      .author-name {
+      .item-info {
+        align-items: center;
+        display: flex;
         flex: 1;
+        height: 100%;
+
+        .author-name {
+          color: $grey6;
+          flex: 1;
+          font-family: 'Open Sans', sans-serif;
+        }
       }
 
-      .delete {
-        &:hover {
-          svg {
-            fill: red;
+      .item-actions {
+        .delete {
+          &:hover {
+            svg {
+              fill: red;
+            }
           }
         }
       }

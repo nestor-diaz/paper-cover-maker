@@ -8,6 +8,8 @@ import InstitutionList from './InstitutionList';
 const InstitutionListPanel = () => (
   <AppContext.Consumer>
     {({
+      authorSelected,
+      affiliations,
       institutions,
       isAddingInstitution,
       onInstitutionStartAdding,
@@ -23,6 +25,8 @@ const InstitutionListPanel = () => (
         )}
       >
         <InstitutionList
+          authorSelected={authorSelected}
+          affiliations={affiliations}
           institutions={institutions}
           onInstitutionAdd={onInstitutionAdd}
           onInstitutionDelete={onInstitutionDelete}

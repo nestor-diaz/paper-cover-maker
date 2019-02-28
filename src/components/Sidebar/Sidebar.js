@@ -1,11 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import AuthorListPanel from './AuthorListPanel';
 import InstitutionListPanel from './InstitutionListPanel';
 import TitleTextField from './TitleTextField';
 import styles from './Sidebar.css';
 import Header from './Header';
+import Footer from './Footer';
 
-const Sidebar = () => (
+const Sidebar = ({ onSave }) => (
   <div className={styles.sidebar}>
     <TitleTextField />
     <div className={styles.affiliations}>
@@ -19,7 +21,16 @@ const Sidebar = () => (
         </div>
       </div>
     </div>
+    <Footer onSave={onSave} />
   </div>
 );
+
+Sidebar.propTypes = {
+  onSave: PropTypes.func
+};
+
+Sidebar.defaultProps = {
+  onSave: () => {}
+};
 
 export default Sidebar;

@@ -24,26 +24,38 @@
       padding: 20px;
     }
 
-    .item {
+    .item-wrapper {
       align-items: center;
       background: $tertiary;
       border-bottom: 1px solid $grey1;
       box-sizing: border-box;
-      color: $grey6;
       cursor: pointer;
       display: flex;
-      font-family: 'Open Sans', sans-serif;
       height: 60px;
       padding: 0 10px;
 
-      .institution-name {
-        flex: 1;
+      &.selected {
+        background: $indigo05;
       }
 
-      .delete {
-        &:hover {
-          svg {
-            fill: red;
+      .item-info {
+        align-items: center;
+        display: flex;
+        flex: 1;
+        height: 100%;
+
+        .institution-name {
+          color: $grey6;
+          font-family: 'Open Sans', sans-serif;
+        }
+      }
+
+      .item-actions {
+        .delete {
+          &:hover {
+            svg {
+              fill: red;
+            }
           }
         }
       }

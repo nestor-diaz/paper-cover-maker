@@ -16,7 +16,7 @@ const DragHandle = SortableHandle(() => (
 const Author = SortableElement(({
   author, isSelected, isHovered, onClick, onDelete, onItemMouseEnter, onItemMouseLeave
 }) => {
-  const authorClassnames = className(styles.item, {
+  const authorClassnames = className(styles.itemWrapper, {
     [styles.selected]: isSelected
   });
 
@@ -26,9 +26,15 @@ const Author = SortableElement(({
       onMouseEnter={() => onItemMouseEnter({ author })}
       onMouseLeave={() => onItemMouseLeave({ author })}
     >
-      <DragHandle />
-      <div className={styles.authorName} onClick={() => onClick({ author })}>{author.name}</div>
-      {isHovered && <div className={styles.delete} onClick={() => onDelete({ author })}><DeleteIcon /></div>}
+      <div className={styles.itemDrag}>
+        <DragHandle />
+      </div>
+      <div className={styles.itemInfo} onClick={() => onClick({ author })}>
+        <div className={styles.authorName}>{author.name}</div>
+      </div>
+      <div className={styles.itemActions}>
+        {isHovered && <div className={styles.delete} onClick={() => onDelete({ author })}><DeleteIcon /></div>}
+      </div>
     </div>
   );
 });

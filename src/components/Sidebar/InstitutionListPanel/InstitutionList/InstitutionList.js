@@ -1,7 +1,8 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import Input from '@material-ui/core/Input';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Input from '@material-ui/core/Input';
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
+import classNames from 'classnames';
 import styles from './InstitutionList.css';
 
 class InstitutionList extends PureComponent {
@@ -33,33 +34,40 @@ class InstitutionList extends PureComponent {
     this.setState({ institutionHovered: {} });
   }
 
-  renderListItem = ({ institution }) => {
+  renderListItem = ({ institution, affiliationsForCurrentAuthor }) => {
     const { onInstitutionClick, onInstitutionDelete } = this.props;
     const { institutionHovered } = this.state;
     const isHovered = institution.id === institutionHovered.id;
+    const isSelected = affiliationsForCurrentAuthor.some((affiliationForAuthor) => affiliationForAuthor.institution.id === institution.id);
+    const itemWrapperClassnames = classNames(styles.itemWrapper, {
+      [styles.selected]: isSelected
+    });
 
     return (
       <div
-        className={styles.item}
+        className={itemWrapperClassnames}
         key={institution.id}
         onMouseEnter={() => this.handleItemMouseEnter({ institution })}
         onMouseLeave={() => this.handleItemMouseLeave({ institution })}
       >
-        <div className={styles.institutionName} onClick={() => onInstitutionClick({ institution })}>
-          {institution.name}
+        <div className={styles.itemInfo} onClick={() => onInstitutionClick({ institution })}>
+          <div className={styles.institutionName}>{institution.name}</div>
         </div>
-        {isHovered && <div className={styles.delete} onClick={() => onInstitutionDelete({ institution })}><DeleteIcon /></div>}
+        <div className={styles.itemActions}>
+          {isHovered && <div className={styles.delete} onClick={() => onInstitutionDelete({ institution })}><DeleteIcon /></div>}
+        </div>
       </div>
     );
   }
 
   renderList = () => {
-    const { institutions } = this.props;
+    const { authorSelected, affiliations, institutions } = this.props;
+    const affiliationsForCurrentAuthor = affiliations.filter((affiliation) => affiliation.author.id === authorSelected.id);
 
     return (
       <div className={styles.institutionList}>
         {institutions.length === 0 && <div className={styles.emptyText}>No institutions has been added</div>}
-        {institutions.map((institution) => this.renderListItem({ institution }))}
+        {institutions.map((institution) => this.renderListItem({ institution, affiliationsForCurrentAuthor }))}
       </div>
     );
   };
@@ -88,6 +96,8 @@ class InstitutionList extends PureComponent {
 }
 
 InstitutionList.propTypes = {
+  authorSelected: PropTypes.object,
+  affiliations: PropTypes.array,
   institutions: PropTypes.array,
   onInstitutionAdd: PropTypes.func,
   onInstitutionDelete: PropTypes.func,
@@ -96,6 +106,8 @@ InstitutionList.propTypes = {
 };
 
 InstitutionList.defaultProps = {
+  authorSelected: {},
+  affiliations: [],
   institutions: [],
   onInstitutionAdd: () => {},
   onInstitutionDelete: () => {},

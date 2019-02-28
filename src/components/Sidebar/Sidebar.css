@@ -2,9 +2,14 @@
 
 :local {
   .sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 100%;
 
     .affiliations {
+      flex: 1;
+
       .lists {
         display: flex;
 
