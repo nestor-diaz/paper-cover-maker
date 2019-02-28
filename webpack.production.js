@@ -1,7 +1,8 @@
 const config = require('config');
 const path = require('path');
-const postcssPlugins = require('./postcss.plugins');
 const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const postcssPlugins = require('./postcss.plugins');
 
 module.exports = {
   mode: 'production',
@@ -56,6 +57,7 @@ module.exports = {
       'process.env': {
         DEVELOPMENT: false
       }
-    })
+    }),
+    new UglifyJsPlugin()
   ]
 };
