@@ -2,10 +2,10 @@ import React from 'react';
 import AppContext from '~/AppContext';
 import Title from './Title';
 import Authors from './Authors';
-import styles from './PaperTitle.css';
+import styles from './PaperPreview.css';
 import Institutions from './Institutions';
 
-const PaperTitle = () => (
+const PaperPreview = () => (
   <AppContext.Consumer>
     {({
       authors,
@@ -13,7 +13,7 @@ const PaperTitle = () => (
       institutionsIndexes,
       title
     }) => (
-      <div className={styles.paperTitle}>
+      <div className={styles.paperPreview}>
         <Title title={title} />
         <Authors authors={authors} authorsIndexes={authorsIndexes} />
         <Institutions institutionsIndexes={institutionsIndexes} />
@@ -22,4 +22,4 @@ const PaperTitle = () => (
   </AppContext.Consumer>
 );
 
-export default PaperTitle;
+export default PaperPreview;

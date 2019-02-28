@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Institution from '~/components/Institution';
+import Institution from './Institution';
 import styles from './Institutions.css';
 
 const Institutions = ({ institutionsIndexes }) => (

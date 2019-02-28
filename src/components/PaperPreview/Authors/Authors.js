@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Author from '~/components/Author';
+import Author from './Author';
 import styles from './Authors.css';
 
 const Authors = ({ authors, authorsIndexes }) => (

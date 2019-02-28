@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import { arrayMove } from 'react-sortable-hoc';
 import randomKey from 'random-key';
-import PaperTitle from '~/components/PaperTitle';
+import PaperPreview from '~/components/PaperPreview';
 import Sidebar from '~/components/Sidebar';
 import { calculateAffiliationIndexes } from '~/utils/affiliations';
 import AppContext from './AppContext';
@@ -162,7 +162,7 @@ class App extends Component {
       >
         <div className={styles.layout}>
           <div className={classNames(styles.column, styles.left)}>
-            <PaperTitle />
+            <PaperPreview />
           </div>
           <div className={classNames(styles.column, styles.right)}>
             <Sidebar onSave={this.handleOnSave} />
